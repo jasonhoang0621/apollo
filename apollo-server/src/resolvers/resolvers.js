@@ -2,31 +2,31 @@ import { ObjectID } from "mongodb";
 
 const resolvers = {
   Query: {
-    students: async (parent, args, { studentModel }) => {
+    students: async (_parent, _args, { studentModel }) => {
       return await studentModel.find({}).toArray();
     },
-    student: async (parent, args, { studentModel }) => {
+    student: async (_parent, args, { studentModel }) => {
       return await studentModel.findOne({ id: args.id });
     },
-    classes: async (parent, args, { classModel }) => {
+    classes: async (_parent, _args, { classModel }) => {
       return await classModel.find({}).toArray();
     },
-    class: async (parent, args, { classModel }) => {
+    class: async (_parent, args, { classModel }) => {
       return await classModel.findOne({ id: args.id });
     },
   },
   Student: {
-    class: async (parent, args, { classModel }) => {
+    class: async (parent, _args, { classModel }) => {
       return await classModel.findOne({ id: parent.classId });
     },
   },
   Class: {
-    students: async (parent, args, { studentModel }) => {
+    students: async (parent, _args, { studentModel }) => {
       return await studentModel.find({ classId: parent.id }).toArray();
     },
   },
   Mutation: {
-    createStudent: async (parent, args, { studentModel }) => {
+    createStudent: async (_parent, args, { studentModel }) => {
       const newStudent = {
         id: ObjectID().toString(),
         name: args.name,
@@ -36,7 +36,7 @@ const resolvers = {
       await studentModel.insertOne(newStudent);
       return newStudent;
     },
-    createClass: async (parent, args, { classModel }) => {
+    createClass: async (_parent, args, { classModel }) => {
       const newClass = {
         id: ObjectID().toString(),
         name: args.name,

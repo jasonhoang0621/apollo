@@ -7,6 +7,7 @@ const getStudents = gql`
       name
       age
       class {
+        id
         name
         students {
           name
